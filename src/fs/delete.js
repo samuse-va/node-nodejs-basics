@@ -1,3 +1,6 @@
+import fs from "fs";
+
 export const remove = async () => {
-    // Write your code here 
+  await fs.promises.unlink("./files/fileToRemove.txt");
 };
+remove();

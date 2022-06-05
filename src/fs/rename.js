@@ -1,3 +1,9 @@
+import fs from "fs";
+
 export const rename = async () => {
-    // Write your code here 
+  await fs.promises.rename(
+    "files/wrongFilename.txt",
+    "files/properFilename.md"
+  );
 };
+rename();

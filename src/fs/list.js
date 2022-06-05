@@ -1,3 +1,8 @@
+import fs from "fs";
+
 export const list = async () => {
-    // Write your code here 
+  const files = await fs.promises.readdir("./files");
+  console.log(files);
 };
+
+list();
