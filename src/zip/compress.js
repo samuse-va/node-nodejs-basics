@@ -13,7 +13,7 @@ export const compress = async () => {
 
   pipeline(source, gzip, destination, (err) => {
     if (err) {
-      console.error("An error occurred:", err);
+      console.error("Error", err);
       process.exitCode = 1;
     }
   });
