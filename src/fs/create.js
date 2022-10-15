@@ -1,9 +1,15 @@
 import fs from "fs";
+import { getPathFromFiles } from "./getPathFromFiles.js";
+
 export const create = async () => {
+  const src = getPathFromFiles(import.meta.url, "fresh.txt");
+  const text = "I am fresh and young";
+
   try {
-    await fs.promises.writeFile("./fresh.txt", "I am fresh and young");
+    await fs.promises.writeFile(src, text, { flag: "wx" });
   } catch (error) {
-    console.error("FS operation failed");
+    throw new Error("FS operation failed");
   }
 };
+
 create();
