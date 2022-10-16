@@ -1,10 +1,13 @@
 export const parseEnv = () => {
-  let arrOfArr = Object.entries(process.env).map(([key, value]) => [
-    "RSS_" + key + "=",
-    value,
-  ]);
-  let res = arrOfArr.map((b) => b.join("")).join(";");
-  console.log(res);
+  const rssVariables = Object.entries(process.env).reduce(
+    (acc, [key, value]) => {
+      if (key.startsWith("RSS_")) acc.push(`${key}=${value}`);
+      return acc;
+    },
+    []
+  );
+
+  console.log(rssVariables.join("; "));
 };
 
 parseEnv();

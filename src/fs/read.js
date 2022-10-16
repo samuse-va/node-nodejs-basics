@@ -1,12 +1,15 @@
 import fs from "fs";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import { getPathFromFiles } from "./getPathFromFiles.js";
 
 export const read = async () => {
-  const file = await fs.promises.readFile("./files/fileToRead.txt", "utf-8");
-  console.log(file);
+  const src = getPathFromFiles(import.meta.url, "fileToRead.txt");
+
+  try {
+    const text = await fs.promises.readFile(src, "utf-8");
+    console.log(text);
+  } catch (e) {
+    throw new Error("FS operation failed");
+  }
 };
+
 read();

@@ -1,7 +1,18 @@
-export const parseArgs = (flag) => {
-  const flagIndex = process.argv.indexOf(flag);
-  return flagIndex !== -1 ? process.argv[flagIndex + 1] : null;
+export const parseArgs = () => {
+  const userInputArgs = process.argv.slice(2);
+  const cliArguments = userInputArgs.reduce((acc, arg, index, arr) => {
+    const valueCandidate = arr[index + 1];
+
+    if (valueCandidate && arg.startsWith("--")) {
+      const transformedArgs = arg.slice(2);
+      const cliArgumentsTransformed = `${transformedArgs} is ${valueCandidate}`;
+      acc.push(cliArgumentsTransformed);
+    }
+
+    return acc;
+  }, []);
+
+  console.log(cliArguments.join(", "));
 };
-const val = parseArgs("-propName");
-const val2 = parseArgs("-prop2Name");
-console.log("propName is " + val + ", prop2Name is " + val2);
+
+parseArgs();

@@ -7,7 +7,7 @@ export const create = async () => {
 
   try {
     await fs.promises.writeFile(src, text, { flag: "wx" });
-  } catch (error) {
+  } catch (e) {
     throw new Error("FS operation failed");
   }
 };
