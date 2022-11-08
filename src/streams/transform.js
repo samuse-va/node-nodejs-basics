@@ -1,15 +1,19 @@
-import fs from "fs";
+import { EOL } from "os";
+import { pipeline, Transform } from "stream";
 
 export const transform = async () => {
-  const input = await fs.createReadStream("./files/fileToRead.txt", "utf-8");
-  input.on("data", (chunk) => {
-    process.stdout.write(chunk);
+  const revert = new Transform({
+    transform(chunk, encoding, callback) {
+      callback(
+        null,
+        chunk.toString().replace(EOL, "").split("").reverse().join("") + EOL
+      );
+    },
   });
-  const output = await fs.createWriteStream("./files/fileToWrite.txt");
-  output.on("data", (chunk) => {
-    process.stdin.write(chunk);
+  pipeline(process.stdin, revert, process.stdout, (err) => {
+    //...
   });
-  input.pipe(output);
+  console.log("Write anything to console...\n");
 };
 
 transform();
